@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import backend.Usuario;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Color;
@@ -75,7 +78,7 @@ public class registro extends JFrame implements ActionListener {
 		
 		JLabel lblDocumento = new JLabel("Documento:");
 		lblDocumento.setFont(new Font("Arial Black", Font.PLAIN, 25));
-		lblDocumento.setBounds(20, 129, 189, 34);
+		lblDocumento.setBounds(10, 129, 189, 34);
 		contentPane.add(lblDocumento);
 		
 		txtCedula = new JTextField();
@@ -122,11 +125,6 @@ public class registro extends JFrame implements ActionListener {
 		lblNewLabel_3.setBounds(121, 11, 453, 27);
 		contentPane.add(lblNewLabel_3);
 		
-		btnRegistrar = new JButton("Registrar");
-		btnRegistrar.addActionListener(this);
-		btnRegistrar.setFont(new Font("Stencil", Font.PLAIN, 25));
-		btnRegistrar.setBounds(268, 389, 179, 39);
-		contentPane.add(btnRegistrar);
 		
 		JLabel lblDireccion = new JLabel("Dirección");
 		lblDireccion.setFont(new Font("Arial Black", Font.PLAIN, 25));
@@ -139,11 +137,46 @@ public class registro extends JFrame implements ActionListener {
 		txtDireccion.setBounds(352, 320, 299, 33);
 		contentPane.add(txtDireccion);
 		
-		JComboBox boxtipodc = new JComboBox();
+		JComboBox<String> boxtipodc = new JComboBox<String>();
 		boxtipodc.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		boxtipodc.setModel(new DefaultComboBoxModel(new String[] {"[selec]", "C.C.", "T.I.", "R.C.", "C.E."}));
+		boxtipodc.setModel(new DefaultComboBoxModel<String>(new String[] {"[selec]", "C.C.", "T.I.", "R.C.", "C.E."}));
 		boxtipodc.setBounds(219, 129, 103, 34);
 		contentPane.add(boxtipodc);
+		
+		btnRegistrar = new JButton("Registrar");
+		btnRegistrar.addActionListener(this);
+		btnRegistrar.setFont(new Font("Stencil", Font.PLAIN, 25));
+		btnRegistrar.setBounds(10, 390, 179, 39);
+		contentPane.add(btnRegistrar);
+		
+		JLabel lblSaludo = new JLabel();
+		lblSaludo.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblSaludo.setBounds(199, 382, 431, 59);
+		contentPane.add(lblSaludo);
+		
+		ActionListener oyenteDeAccion = new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				lblSaludo.setText("Bienvenido "+txtNombre.getText());
+				
+			Usuario user =new Usuario();
+						
+			user.setNombre(txtNombre.getText());
+			user.setDoc(Integer.parseInt(txtCedula.getText()));
+			user.setCorreo(txtCorreo.getText());
+			user.setTelefono(Integer.parseInt(txtTelefono.getText()));
+			user.setCiudad(txtCiudad.getText());
+			user.setDireccion(txtCiudad.getText());
+			
+			System.out.println("Usuario: "+user.getCorreo());
+			
+			}
+			
+		};
+		
+		btnRegistrar.addActionListener(oyenteDeAccion);
+		
 	}
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnRegistrar) {
